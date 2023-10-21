@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>21090002D_Drink Ordering System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script src="scripts/jquery-3.7.1.min.js"></script>
+    <script src="scripts/order.js"></script>
+    <style>
+        .error {
+            border: 2px solid red;
+            box-shadow: 0px 0px 5px red;
+        }
+
+        .error-free {
+            border: 2px solid lightgreen;
+            box-shadow: 0px 0px 5px lightgreen;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="text-bg-dark fs-1 p-3 text-center">
+        Drink Ordering System
+    </header>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
+                aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarTogglerDemo02">
+                <ul class="navbar-nav my-2 my-lg-0 gap-lg-4">
+                    <li class="nav-item">
+                        <!-- Home (index.html) -->
+                        <a class="nav-link fw-bold" href="/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Order (order.html) -->
+                        <a class="nav-link active fw-bold link-primary" aria-current="page" href="/order.html">Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Reserve a Table (reserve.html) -->
+                        <a class="nav-link fw-bold" href="/reserve.html">Reserve a Table</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Menu (menu.html) -->
+                        <a class="nav-link fw-bold" href="/menu.html">Menu</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-1 pb-4 mb-5">
+        <form id="drinkOrderForm" method="post">
+            <div class="row">
+                <label for="inputName" class="form-label my-2">Name: </label>
+                <input type="text" name="inputName" id="inputName" class="form-control" aria-label="input name">
+            </div>
+            <div class="row">
+                <label for="drinkOpts" class="form-label my-2">Drink: </label>
+                <select name="drinkOpts" id="drinkOpts" class="form-select" aria-label="drink options"
+                    onchange="calculatePrice()">
+                    <option value="default" selected disabled>Please Select</option>
+                    <option value="bubble-milktea">Bubble Milktea</option>
+                    <option value="iced-latte">Iced Latte</option>
+                    <option value="caramel-macchiato">Caramel Macchiato</option>
+                </select>
+            </div>
+            <div class="row mt-3 mb-1 d-none justify-content-center" id="imgContainer">
+                <img id="drinkDisplay" class="w-25" src="" alt="">
+            </div>
+            <div class="row justify-content-evenly d-inline-block d-lg-flex">
+                <div class="col mt-1 d-flex d-lg-block">
+                    <label for="size" class="form-label my-2">Size: </label>
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" onchange="calculatePrice()" class="btn-check" name="size" id="S" value="S">
+                        <label class="btn btn-outline-success" for="S">Small</label>
+                    </div>
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" onchange="calculatePrice()" class="btn-check" name="size" id="M" value="M">
+                        <label class="btn btn-outline-success" for="M">Medium</label>
+                    </div>
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" onchange="calculatePrice()" class="btn-check" name="size" id="L" value="L">
+                        <label class="btn btn-outline-success" for="L">Large</label>
+                    </div>
+                </div>
+                <div class="col d-flex d-lg-block">
+                    <label for="ice" class="form-label my-2">Ice: </label>
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" class="btn-check" name="ice" id="normal" value="normal">
+                        <label class="btn btn-outline-success" for="normal">Normal</label>
+                    </div>
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" class="btn-check" name="ice" id="less" value="less">
+                        <label class="btn btn-outline-success" for="less">Less</label>
+                    </div>
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" class="btn-check" name="ice" id="without" value="without">
+                        <label class="btn btn-outline-success" for="without">Without</label>
+                    </div>
+                </div>
+                <div class="col d-flex d-lg-block">
+                    <label for="sweetness" class="form-label my-2">Sweetness: </label>
+                    <!-- 100%, 50%, 0%  -->
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" class="btn-check" name="sweetness" id="full" value="full">
+                        <label class="btn btn-outline-success" for="full">100%</label>
+                    </div>
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" class="btn-check" name="sweetness" id="half" value="half">
+                        <label class="btn btn-outline-success" for="half">50%</label>
+                    </div>
+                    <div class="py-1 ps-2 ps-lg-0 pt-lg-0">
+                        <input type="radio" class="btn-check" name="sweetness" id="none" value="none">
+                        <label class="btn btn-outline-success" for="none">0%</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row fs-5 fw-bold my-3">
+                <p>Price: $<span id="price">0</span></p>
+            </div>
+            <div class="row my-3 p-3 d-none message"></div>
+            <button onclick="placeOrder(event)" class="btn btn-success" type="button">Place Order</button>
+            <button class="btn btn-warning" type="reset">Reset</button>
+            <!-- <button class="btn btn-warning" onclick="validateForm()" type="button">testing</button> -->
+        </form>
+    </div>
+
+    <footer class="fixed-bottom text-bg-dark fs-6 py-3 text-center">
+        © 21090002D Leung Yan Nok Ruby - EIE4432 Lab 2 Project
+    </footer>
+</body>
+
+</html>
