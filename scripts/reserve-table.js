@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    let bookingStatus = ["3"];
+    let bookingStatus = [];
     let selectTableId = null;
     localStorage.setItem("bookedTable", JSON.stringify(bookingStatus));
 
