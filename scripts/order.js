@@ -121,7 +121,7 @@ function placeOrder(event) {
         localStorage.setItem("orders", orderData);
         //window.alert("Order placed successfully! Thank you for your order.");
         $(".message").html("<div>Order placed successfully! Thank you for your order.</div>").removeClass("d-none");
-        $(".message > div").addClass("alert alert-primary").hide().fadeIn(500).delay(3000).fadeOut(500, function () {
+        $(".message > div").addClass("alert alert-success").hide().fadeIn(500).delay(3000).fadeOut(500, function () {
             $(".message").remove("alert").addClass("d-none");
             document.getElementById("drinkOrderForm").reset();
             document.getElementById("price").innerHTML = 0;
